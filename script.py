@@ -6,6 +6,11 @@ import subprocess
 
 target_file_path = os.path.expanduser('~/pomodoro-history.csv')
 def check_log_files():
+    """
+    check if log files exist
+
+    :return: nothing
+    """
     if os.path.isfile(target_file_path):
         print("pomodoro file exists")
     else:
@@ -30,9 +35,17 @@ def count_down(minutes):
                 multiple = 10 * position
                 print(("#" * int(multiple)) + ": " + str(100 * position) + "%")
             seconds -= 1
+
     except KeyboardInterrupt:
         print("interrupted")
 def write_pomodoro(message, tasks):
+    """
+    write message and task name to pomodoro file
+
+    :param message: pomodoro status
+    :param tasks: task name
+    :return: nothing
+    """
     delta = datetime.timedelta(hours=9)
     jst = datetime.timezone(delta, 'JST')
     now = datetime.datetime.now(jst)
@@ -44,6 +57,11 @@ def write_pomodoro(message, tasks):
     f.close()
 
 def read_latest_task_name():
+    """
+    Read the latest pomodoro task name from the pomodoro file
+
+    :return: latest pomodoro task name
+    """
     with open(target_file_path, 'r') as f:
         lines = f.readlines()
         last_lines = lines[-1]
@@ -52,6 +70,11 @@ def read_latest_task_name():
         return split_list[1]
 
 def beep():
+    """
+    beep Mac Sound
+
+    :return: nothing
+    """
     command = ["afplay", "/System/Library/Sounds/Ping.aiff"]
     subprocess.call(command)
 

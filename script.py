@@ -13,10 +13,16 @@ def check_log_files():
             pass
         print("pomodoro file created")
 def count_down(minutes):
+    base_seconds = minutes * 60
     seconds = minutes * 60
     try:
         while seconds > 0:
             time.sleep(1)
+            position = seconds / base_seconds
+            print(position)
+            if (seconds / 60) % 5 == 0:
+                multiple = 10 * position
+                print(("#" * int(multiple)) + ": " + str(100 * position) + "%")
             seconds -= 1
     except KeyboardInterrupt:
         print("interrupted")

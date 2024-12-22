@@ -55,17 +55,47 @@ def beep():
     command = ["afplay", "/System/Library/Sounds/Ping.aiff"]
     subprocess.call(command)
 
-if sys.argv[1] == 'start':
-    check_log_files()
-    write_pomodoro("START", sys.argv[2])
-    beep()
-    count_down(25)
-    write_pomodoro("FINISH", read_latest_task_name())
-    beep()
-elif sys.argv[1] == 'rest':
-    check_log_files()
-    write_pomodoro("START", "REST")
-    beep()
-    count_down(5)
-    write_pomodoro("FINISH", "REST")
-    beep()
+def interactive_choice(options_list):
+    """
+    post the options and choose one
+
+    :param options_list:
+    :return: selected option
+    """
+    try:
+        if not options_list:
+                print("specify options")
+                return None
+        while True:
+                print("select one")
+                for i, option in enumerate(options_list):
+                    print(f"{i}, {option}")
+                choice = input(">> ")
+                if choice.isdigit():
+                    choice_number = int(choice)
+                    if choice_number < len(options_list) - 1:
+                        return options_list[choice_number]
+                print("invalid option, please try again")
+    except KeyboardInterrupt:
+        print("cancelled")
+
+if __name__ == "__main__":
+    options = ["START", "REST"]
+    selected = interactive_choice(options)
+    print(f"your choice: {selected}")
+    if selected == 'START':
+        print("input task name")
+        task_name = input(">> ")
+        check_log_files()
+        write_pomodoro("START", task_name)
+        beep()
+        count_down(25)
+        write_pomodoro("FINISH", read_latest_task_name())
+        beep()
+    elif selected == 'REST':
+        check_log_files()
+        write_pomodoro("START", "REST")
+        beep()
+        count_down(5)
+        write_pomodoro("FINISH", "REST")
+        beep()

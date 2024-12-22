@@ -13,6 +13,12 @@ def check_log_files():
             pass
         print("pomodoro file created")
 def count_down(minutes):
+    """
+    count down the number of minutes
+
+    :param minutes: total time
+    :return:nothing
+    """
     base_seconds = minutes * 60
     seconds = minutes * 60
     try:
@@ -32,7 +38,7 @@ def write_pomodoro(message, tasks):
     now = datetime.datetime.now(jst)
     print(now)
     f = open(target_file_path, '+a')
-    new_lines = message + "," + tasks + "," + now.__str__() + "\n"
+    new_lines = message + "," + tasks + "," + str(now) + "\n"
     print(new_lines)
     f.write(new_lines)
     f.close()

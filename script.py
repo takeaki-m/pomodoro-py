@@ -96,7 +96,7 @@ def interactive_choice(options_list):
                 choice = input(">> ")
                 if choice.isdigit():
                     choice_number = int(choice)
-                    if choice_number < len(options_list) - 1:
+                    if choice_number < len(options_list):
                         return options_list[choice_number]
                 print("invalid option, please try again")
     except KeyboardInterrupt:

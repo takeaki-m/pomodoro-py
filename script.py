@@ -102,13 +102,34 @@ def interactive_choice(options_list):
     except KeyboardInterrupt:
         print("cancelled")
 
+def read_past_tasks():
+    """
+    Read the past tasks from the pomodoro file
+    :return:
+    """
+    try:
+        with open(target_file_path, 'r') as f:
+            lines = f.readlines()
+            past_tasks = []
+            for line in lines:
+                past_tasks.append(line.split(',')[1])
+            return list(set(past_tasks))
+    except KeyboardInterrupt:
+        print("cancelled")
 if __name__ == "__main__":
     options = ["START", "REST"]
     selected = interactive_choice(options)
     print(f"your choice: {selected}")
     if selected == 'START':
-        print("input task name")
-        task_name = input(">> ")
+        task_options = ['FROM PAST TASK', 'INPUT NEW ONE']
+        task_option_selected = interactive_choice(task_options)
+        task_name = ''
+        if task_option_selected == 'FROM PAST TASK':
+            past_tasks = read_past_tasks()
+            task_name = interactive_choice(past_tasks)
+        elif task_option_selected == 'INPUT NEW ONE':
+            print("input task name")
+            task_name = input(">> ")
         check_log_files()
         write_pomodoro("START", task_name)
         beep()

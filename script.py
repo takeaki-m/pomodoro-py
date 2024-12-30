@@ -30,10 +30,10 @@ def count_down(minutes):
         while seconds > 0:
             time.sleep(1)
             position = seconds / base_seconds
-            print(position)
             if (seconds / 60) % 5 == 0:
                 multiple = 10 * position
                 print(("#" * int(multiple)) + ": " + str(100 * position) + "%")
+                print(position)
             seconds -= 1
 
     except KeyboardInterrupt:
